@@ -8,12 +8,12 @@ let currentProcedimentos = 1;
 async function loadCSVData() {
     try {
         // Carregar dados de procedimentos
-        const procedimentosResponse = await fetch('procedimentos.csv');
+        const procedimentosResponse = await fetch('https://github.com/victorcords/apac-sus/blob/78a11aae2389bd397fb30fc7d183284cbe21ca8f/data/procedimentos.csv');
         const procedimentosText = await procedimentosResponse.text();
         procedimentosData = Papa.parse(procedimentosText, { header: true }).data;
         
         // Carregar dados de CID
-        const cidResponse = await fetch('cid.csv');
+        const cidResponse = await fetch('https://github.com/victorcords/apac-sus/blob/78a11aae2389bd397fb30fc7d183284cbe21ca8f/data/cid.csv');
         const cidText = await cidResponse.text();
         cidData = Papa.parse(cidText, { header: true }).data;
         
@@ -327,7 +327,7 @@ async function gerarPDF() {
     
     try {
         // 1. Primeiro carregamos o PDF
-        const modelUrl = 'modelo.pdf';
+        const modelUrl = 'https://github.com/victorcords/apac-sus/blob/78a11aae2389bd397fb30fc7d183284cbe21ca8f/data/modelo.pdf';
         const existingPdfBytes = await fetch(modelUrl).then(res => res.arrayBuffer());
         
         // 2. Inicializamos o documento PDF
