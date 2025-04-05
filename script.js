@@ -562,19 +562,48 @@ themeToggle.addEventListener('change', function() {
 // Função para limpar formulário
 function limparFormulario() {
     if (confirm('Tem certeza que deseja limpar todos os campos?')) {
-        document.querySelector('form').reset();
-        
-        // Remover procedimentos adicionais
+        // 1. Limpar todos os campos do formulário
+        const form = document.querySelector('form');
+        if (form) {
+            form.reset();
+        } else {
+            // Fallback caso o seletor 'form' não funcione
+            document.querySelectorAll('input, textarea').forEach(element => {
+                if (element.type !== 'button' && element.type !== 'submit') {
+                    element.value = '';
+                }
+                if (element.type === 'radio' || element.type === 'checkbox') {
+                    element.checked = false;
+                }
+            });
+        }
+
+        // 2. Remover procedimentos adicionais (exceto o primeiro)
         const procedures = document.querySelectorAll('.procedure-section');
         procedures.forEach((proc, index) => {
             if (index > 0) proc.remove();
         });
-        
+
+        // 3. Resetar variáveis de controle
         currentProcedimentos = 1;
-        
-        // Resetar data atual
+
+        // 4. Restaurar data atual
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('dataAtual').value = today;
+        const dataAtualInput = document.getElementById('dataAtual');
+        if (dataAtualInput) {
+            dataAtualInput.value = today;
+        }
+
+        // 5. Limpar qualquer estado de erro
+        document.querySelectorAll('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+
+        // 6. Focar no primeiro campo
+        const primeiroCampo = document.getElementById('nome');
+        if (primeiroCampo) {
+            primeiroCampo.focus();
+        }
     }
 }
 
